@@ -4,36 +4,54 @@ export default function JobCard({ job }) {
   const navigate = useNavigate();
 
   return (
-    <div
-      onClick={() => navigate(`/jobs/${job.id}`)}
-      className="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg cursor-pointer transition-all duration-200"
-    >
-      <h3 className="text-xl font-semibold text-gray-800">
-        {job.title}
-      </h3>
+    <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 
+                    hover:shadow-lg hover:-translate-y-1 transition duration-300">
 
-      <p className="text-gray-600 mt-1">{job.company}</p>
+      {/* Top Section */}
+      <div className="flex items-start justify-between">
+        <div>
+          <h3 className="text-lg font-semibold text-gray-900">
+            {job.title}
+          </h3>
+          <p className="text-sm text-gray-500 mt-1">
+            {job.company}
+          </p>
+        </div>
 
-      <div className="mt-4 flex flex-wrap gap-2 text-sm">
-        <span className="bg-gray-100 px-3 py-1 rounded-full">
-          {job.location}
-        </span>
-        <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full">
-          {job.type}
-        </span>
+        {/* Placeholder Logo */}
+        <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center text-sm font-bold text-gray-600">
+          {job.company?.charAt(0)}
+        </div>
       </div>
 
-      <div className="mt-6">
-        <button
-          onClick={(e) => {
-            e.stopPropagation(); // prevent card click
-            navigate(`/jobs/${job.id}`);
-          }}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 active:scale-95 transition"
-        >
-          View Details
-        </button>
+      {/* Tags */}
+      <div className="mt-4 flex flex-wrap gap-2">
+        <span className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs">
+          📍 {job.location}
+        </span>
+
+        <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs">
+          💼 {job.type}
+        </span>
+
+        {job.salary && (
+          <span className="bg-green-100 text-green-600 px-3 py-1 rounded-full text-xs">
+            💰 {job.salary}
+          </span>
+        )}
       </div>
+
+      {/* Divider */}
+      <div className="my-4 border-t"></div>
+
+      {/* Action */}
+      <button
+        onClick={() => navigate(`/jobs/${job.id}`)}
+        className="w-full bg-blue-600 text-white py-2 rounded-lg 
+                   hover:bg-blue-700 active:scale-95 transition"
+      >
+        View Details →
+      </button>
     </div>
   );
 }

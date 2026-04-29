@@ -8,6 +8,12 @@ import JobDetails from "../pages/candidate/JobDetails";
 import ApplyJob from "../pages/candidate/ApplyJob";
 import ProtectedRoute from "./ProtectedRoute";
 
+// ✅ FIXED imports
+import RecruiterDashboard from "../pages/recruiter/Dashboard";
+import PostJob from "../pages/recruiter/PostJob";
+import ManageJobs from "../pages/recruiter/ManageJobs";
+import EditJob from "../pages/recruiter/EditJob";
+
 export default function AppRoutes() {
   return (
     <Routes>
@@ -31,6 +37,27 @@ export default function AppRoutes() {
       <Route path="/jobs" element={<Jobs />} />
       <Route path="/jobs/:id" element={<JobDetails />} />
 
+      {/* ✅ Recruiter */}
+      <Route
+        path="/recruiter"
+        element={
+          <ProtectedRoute role="ROLE_RECRUITER">
+            <RecruiterDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/recruiter/post-job"
+        element={
+          <ProtectedRoute role="ROLE_RECRUITER">
+            <PostJob />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="/recuiter/manage" element={<ManageJobs />} />
+      <Route path="/recuiter/edit/:id" element={<EditJob />} />
+
+      {/* Apply */}
       <Route
         path="/apply/:id"
         element={

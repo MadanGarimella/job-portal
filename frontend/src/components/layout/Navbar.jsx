@@ -1,23 +1,45 @@
 import { Link } from "react-router-dom";
+import { getUserRole } from "../../utils/auth";
 
 export default function Navbar() {
+  const role = getUserRole();
+
   return (
     <nav className="w-full bg-white shadow-sm px-6 py-4 flex justify-between items-center">
-      <h1 className="text-xl font-bold text-blue-600">JobPortal</h1>
+      <Link to="/" className="text-xl font-bold text-blue-600">
+        JobPortal
+      </Link>
 
       <div className="flex gap-6 items-center">
-        <Link to="/" className="text-gray-600 hover:text-blue-600">
-          Home
+
+        <Link to="/jobs" className="text-gray-600 hover:text-blue-600">
+          Jobs
         </Link>
-        <Link to="/login" className="text-gray-600 hover:text-blue-600">
-          Login
-        </Link>
-        <Link
-          to="/register"
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg"
-        >
-          Sign Up
-        </Link>
+
+        {role === "ROLE_RECRUITER" && (
+          <Link to="/recruiter" className="text-gray-600 hover:text-blue-600">
+            Recruiter
+          </Link>
+        )}
+
+        {!role && (
+          <>
+            <Link to="/login">Login</Link>
+            <Link to="/register">Sign Up</Link>
+          </>
+        )}
+
+        {role && (
+          <button
+            onClick={() => {
+              localStorage.removeItem("token");
+              window.location.href = "/";
+            }}
+            className="text-red-500"
+          >
+            Logout
+          </button>
+        )}
       </div>
     </nav>
   );
